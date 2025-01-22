@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <title>Seven Data</title>
+</head>
+<body>
+    <div class="spine">
+        <h1><a href="index.html">Seven Data</a></h1>
+
+        <div class="upload-section">
+            <input type="file" id="fileInput" accept=".zip" style="display: none;">
+            <label for="fileInput" id="selectFileButton">Selecionar ficheiro</label>
+        </div>
+
+        <div>
+            <canvas id="dailyGraph" width="400" height="200" hidden></canvas>
+        </div>
+
+        <div id="results" hidden>
+            <div id="resultsHeader"></div>
+                <h2>Resultados</h2>
+                <button id="downloadButton">Download</button>
+            </div>
+            <pre id="output"></pre>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
