@@ -3,6 +3,7 @@ document.getElementById("fileInput").addEventListener("change", () => {
     const output = document.getElementById("output");
     const resultsSection = document.getElementById("results");
     const downloadButton = document.getElementById("downloadButton");
+    const chart = document.getElementById("chart");
 
     if (fileInput.files.length === 0) {
         alert("Por favor selecione um ficheiro '.zip'");
@@ -30,6 +31,8 @@ document.getElementById("fileInput").addEventListener("change", () => {
                 // Display the results
                 resultsSection.hidden = false;
                 output.textContent = processedContent;
+                chart.hidden = false;
+                output.hidden = false;
 
                 // Enable download
                 downloadButton.hidden = false;
@@ -220,6 +223,7 @@ function renderGraph(dailyTotalsFull, dailyTotalsSum) {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
