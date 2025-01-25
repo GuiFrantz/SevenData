@@ -58,7 +58,7 @@ function processFileContent(inputFileContent) {
         const lines = inputFileContent.split('\n');
 
         if (!lines.some(line => line.includes("Tio Jr S2: *E’Leclerc -"))) {
-            throw new Error("O ficheiro de texto não possui o formato desejado.\n\n[Não conseguimos encontrar a linha 'Tio Jr S2: *E’Leclerc -']");
+            throw new Error("O ficheiro de texto não possui o formato desejado.");
         }
 
         const monthlyTotalsFull = {};
