@@ -3,34 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/dollar.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/icon.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <title>Seven Data</title>
 </head>
-<body>
-    <div class="spine">
-        <h1><a href="index.html">Seven Data</a></h1>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-md mx-auto px-4 py-8">
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">
+                <a href="index.html" class="hover:text-blue-700 transition-colors">SEVEN DATA</a>
+            </h1>
+            <a href="https://guifrantz.github.io/GuiFrantz/" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="inline-block text-gray-600 hover:text-gray-700 px-4 py-1 rounded-md 
+                      transition-colors hover:bg-gray-100 text-sm">
+                made by Gui Frantz
+            </a>
+        </header>
 
-        <div class="upload-section">
-            <input type="file" id="fileInput" accept=".zip" style="display: none;">
-            <label for="fileInput" id="selectFileButton">Selecionar ficheiro</label>
+        <!-- Seção de Upload -->
+        <div class="upload-section mb-8">
+            <input type="file" id="fileInput" accept=".zip" class="hidden">
+            <label 
+                for="fileInput"
+                class="bg-blue-600 text-white w-full py-4 px-6 rounded-xl text-xl font-semibold
+                       flex items-center justify-center space-x-2
+                       hover:bg-blue-700 transition-colors cursor-pointer"
+                id="selectFileButton">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+                <span>Selecionar Arquivo</span>
+            </label>
+            <p class="text-gray-500 text-center mt-2">Formatos suportados: .zip</p>
         </div>
 
-        <div id="chart" hidden>
-            <canvas id="dailyGraph"></canvas>
+        <!-- Gráfico -->
+        <div id="chart" hidden class="my-8">
+            <canvas id="dailyGraph" class="w-full max-h-96"></canvas>
         </div>
 
-        <div id="results" hidden>
-            <div id="resultsHeader"></div>
-                <h2>Resultados</h2>
-                <button id="downloadButton">Download</button>
+        <!-- Resultados -->
+        <div id="results" hidden class="bg-white rounded-xl shadow-sm">
+            <div id="resultsHeader" class="flex items-center justify-between p-6 border-b">
+                <h2 class="text-2xl font-semibold text-gray-700">Resultados</h2>
+                <button 
+                    id="downloadButton"
+                    class="bg-green-600 text-white py-3 px-6 rounded-lg text-lg
+                           hover:bg-green-700 transition-colors flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    <span>Download</span>
+                </button>
             </div>
-            <pre id="output" hidden></pre>
+            <pre id="output" hidden class="p-6 text-base bg-gray-100 rounded-b-xl overflow-x-auto"></pre>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
