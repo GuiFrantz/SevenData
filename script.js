@@ -3,7 +3,6 @@ document.getElementById("fileInput").addEventListener("change", () => {
     const output = document.getElementById("output");
     const resultsSection = document.getElementById("results");
     const downloadButton = document.getElementById("downloadButton");
-    const chart = document.getElementById("chart");
 
     if (fileInput.files.length === 0) {
         alert("Por favor selecione um ficheiro '.zip'");
@@ -26,20 +25,19 @@ document.getElementById("fileInput").addEventListener("change", () => {
                 return chatFile.async("string");
             })
             .then(content => {
-                const { processedContent, dailyTotalsFull } = processFileContent(content);
+                const { processedContent } = processFileContent(content);
+
+                // Hide placeholder
+                placeholder.hidden = true;
 
                 // Display the results
                 resultsSection.hidden = false;
                 output.textContent = processedContent;
-                chart.hidden = false;
                 output.hidden = false;
 
                 // Enable download
                 downloadButton.hidden = false;
                 downloadButton.onclick = () => downloadFile(processedContent, "analise_seven.txt");
-
-                // Render the graph
-                renderGraph(dailyTotalsFull);
             })
             .catch(error => {
                 alert(error.message);
@@ -158,86 +156,4 @@ function downloadFile(content, filename) {
     link.href = URL.createObjectURL(blob);
     link.download = filename;
     link.click();
-}
-
-function renderGraph(dailyTotalsFull, dailyTotalsSum) {
-    const ctx = document.getElementById("dailyGraph").getContext("2d");
-
-    // Get the last month and year from the dailyTotalsFull keys
-    const lastMonthYear = Object.keys(dailyTotalsFull).sort().pop();
-    const [lastYear, lastMonth] = lastMonthYear.split("-");
-
-    // Filter dailyTotalsFull for the last month
-    const lastMonthData = {};
-    for (const dayKey in dailyTotalsFull) {
-        if (dayKey.startsWith(`${lastYear}-${lastMonth}`)) {
-            lastMonthData[dayKey] = dailyTotalsFull[dayKey];
-        }
-    }
-
-    // Calculate the mean values for the same days in all years
-    const meanValues = {};
-    for (const dayKey in dailyTotalsFull) {
-        const [year, month, day] = dayKey.split("-").map(Number);
-        if (month === Number(lastMonth)) {
-            if (!meanValues[day]) meanValues[day] = [];
-            meanValues[day].push(dailyTotalsFull[dayKey]);
-        }
-    }
-
-    const meanValuesForLastMonth = Object.keys(lastMonthData).map(dayKey => {
-        const day = Number(dayKey.split("-")[2]);
-        const values = meanValues[day] || [];
-        const sum = values.reduce((acc, val) => acc + val, 0);
-        return values.length ? sum / values.length : 0;
-    });
-
-    const labels = Object.keys(lastMonthData).map(dayKey => {
-        const [year, month, day] = dayKey.split("-").map(part => part.padStart(2, '0'));
-        return `${day}/${month}`;
-    });
-
-    const dailyAmounts = Object.values(lastMonthData);
-
-    new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Valor Diário",
-                    data: dailyAmounts,
-                    borderColor: "#1e7e34",
-                    borderWidth: 2,
-                    fill: false,
-                },
-                {
-                    label: "Média Diária",
-                    data: meanValuesForLastMonth,
-                    borderColor: "#BF3939",
-                    borderDash: [5, 5],
-                    borderWidth: 2,
-                    fill: false,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: "Último mês em retrospectiva",
-                },
-            },
-            scales: {
-                x: {
-                    title: { display: true, text: "Dia" },
-                },
-                y: {
-                    title: { display: true, text: "Valor (€)" },
-                },
-            },
-        },
-    });
 }
