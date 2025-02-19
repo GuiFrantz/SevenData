@@ -4,14 +4,18 @@ document.getElementById("fileInput").addEventListener("change", () => {
     const resultsSection = document.getElementById("results");
     const downloadButton = document.getElementById("downloadButton");
 
+    // Reset download button state on new file selection
+    downloadButton.classList.add('opacity-90', 'cursor-not-allowed');
+    downloadButton.onclick = null;
+
     if (fileInput.files.length === 0) {
         alert("Por favor selecione um ficheiro '.zip'");
         return;
     }
 
     const file = fileInput.files[0];
-
     const reader = new FileReader();
+
     reader.onload = function (e) {
         const zip = new JSZip();
 
@@ -21,22 +25,18 @@ document.getElementById("fileInput").addEventListener("change", () => {
                 if (!chatFile) {
                     throw new Error("Não conseguimos encontrar o ficheiro '_chat.txt' dentro do ficheiro ZIP");
                 }
-
                 return chatFile.async("string");
             })
             .then(content => {
                 const { processedContent } = processFileContent(content);
 
-                // Hide placeholder
                 placeholder.hidden = true;
-
-                // Display the results
                 resultsSection.hidden = false;
                 output.textContent = processedContent;
                 output.hidden = false;
 
-                // Enable download
-                downloadButton.hidden = false;
+                // Enable download button
+                downloadButton.classList.remove('opacity-50', 'cursor-not-allowed');
                 downloadButton.onclick = () => downloadFile(processedContent, "analise_seven.txt");
             })
             .catch(error => {
