@@ -1,7 +1,7 @@
 {
     "display": "standalone",
     "scope": "/",
-    "start_url": "/index.html",
+    "start_url": "/SevenData/index.html",
     "name": "Seven Data",
     "short_name": "Seven Data",
     "icons": [
