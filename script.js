@@ -55,7 +55,7 @@ function processFileContent(inputFileContent) {
     try {
         const lines = inputFileContent.split('\n');
 
-        if (!lines.some(line => line.includes("Tio Jr S2: *E’Leclerc -"))) {
+        if (!lines.some(line => line.includes("S2: *E’Leclerc -"))) {
             throw new Error("O ficheiro de texto não possui o formato desejado.");
         }
 
@@ -68,7 +68,7 @@ function processFileContent(inputFileContent) {
         let currentDate = "";
 
         lines.forEach(line => {
-            if (line.includes("Tio Jr S2: *E’Leclerc -")) {
+            if (line.includes("S2: *E’Leclerc -")) {
                 currentDate = line.split("- ")[1].replace("*", "").trim();
                 dates.push(currentDate);
             }
