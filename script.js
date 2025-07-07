@@ -68,7 +68,7 @@ function processFileContent(inputFileContent) {
         let currentDate = "";
 
         lines.forEach(line => {
-            if (line.includes("S2: *E’Leclerc -") || line.includes("S2: *Seven Barbearia -") {
+            if (line.includes("S2: *E’Leclerc -") || line.includes("S2: *Seven Barbearia -")) {
                 currentDate = line.split("- ")[1].replace("*", "").trim();
                 dates.push(currentDate);
             }
